@@ -1,0 +1,30 @@
+
+The domain iglesiafilipinaindependenteparish.rf.gd
+
+Email in add ministry
+message in priest
+make calendar
+certificate scroll ====OK
+date marriage== make automatic ==OK
+kuya pwede po papalitan yung mga word ==OK
+Perpage = Filter ===OK
+Baptism = Baptismal === OK
+Sending Message = Message  ==OK
+Tas Pa capitalized po yung ibang first letter ==OK
+login and sign up remove header ==OK
+account number remove ==OK
+count sa dashbord ng worship ministry==OK
+add chart ==OK
+Sa wedding event form po pwede po pa fixed ng church address since same church lang naman po.  ==OK
+Sa gender po pwede po ba na may button kung male or female ==OK
+icon print and icon in dashboard, massage report etc ==OK
+request document  upon received ni admin for payment  Please claim document
+all contact number +63 add option if mobile phone optional
+
+Upon request document possible send yung document gamit ang email 
+as copy then note na pwde nya ma pick up yung original copy
+forgot password send to email
+donation as things
+
+
+flow sa index add gawin 4

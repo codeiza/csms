@@ -1,0 +1,32 @@
+#table{
+	display: block;
+	max-width: 100%;
+	overflow: auto;
+	height: auto;
+	color: black;
+}
+#table3{
+	display: block;
+	max-width: 100%;
+	overflow: auto;
+	height: auto;
+	color: black;
+}
+
+#signup, #page-container{
+	display: block;
+	max-width: auto;
+	overflow: auto;
+	height: 100%;
+	color: black;
+}
+#fixed_headers{
+	position: sticky;
+	top: 0px;
+	padding: 0px;
+	border-left:solid 1px #DDEFEF;
+	border-right:solid 1px #DDEFEF;
+	left: 0;
+	overflow:100%;
+	max-width:100%;
+}
