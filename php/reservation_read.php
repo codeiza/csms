@@ -60,7 +60,7 @@ try {
         } else {
             $tbody .= '<td>
                 <button class="btn btn-success approved" request_form_id="' . $row["request_form_id"] . '" payment_type="' . $row["payment_type"] . '" reserve_by="' . $row["reserve_by"] . '" date_paid="' . $row["date_paid"] . '" amount_paid="' . $row["amount_paid"] . '" start="' . $row["start_datetime"] . '" email="' . $row["email"] . '"  event="' . $row["title"] . '" id="Status-' . $row["id"] . '" title="once you approve automatically send to client through email"><span class="fa fa-thumbs-up"></span></button> 
-                <button class="btn btn-danger disapproved" event="' . $row["title"] . '" email="' . $row["email"] . '"  id="Status-' . $row["id"] . '"><span class="fa fa-thumbs-down"></span></button>
+                <button class="btn btn-danger s disapproved" event="' . $row["title"] . '" email="' . $row["email"] . '"  id="Status-' . $row["id"] . '"><span class="fa fa-thumbs-down"></span></button>
             </td>';
         }
         $tbody .= '</tr>';
