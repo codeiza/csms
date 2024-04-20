@@ -12,7 +12,7 @@ try{
 			 SET
 			 ".$_REQUEST["column"]." = '".$_REQUEST["value"]."'
 			 WHERE
-			 id = ".$_REQUEST["id"]."
+			 id = ".$_REQUEST["id"]." 
 			 "
 			 );
 		

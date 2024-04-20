@@ -17,14 +17,14 @@ try {
     );
     $stmt->execute();
     $total = $stmt->rowCount();
-    $stmt = $pdo->prepare(
-        "SELECT * FROM requested_document
-	   WHERE
-	   request_status = 'For Received'
-	   "
-    );
-    $stmt->execute();
-    $totaldoc = $stmt->rowCount();
+    // $stmt = $pdo->prepare(
+    //     "SELECT * FROM requested_document
+    //    WHERE
+    //    request_status = 'For Received'
+    //    "
+    // );
+    // $stmt->execute();
+    // $totaldoc = $stmt->rowCount();
 } catch (PDOExeption $e) {
     echo $e->getMessage();
 }
@@ -51,135 +51,135 @@ $pdo = null;
 
 </head>
 <style>
-    .form-box {
-        border: 2px solid #ccc;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-left: 20px;
-        /* Adjust the margin as needed */
+.form-box {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    /* Adjust the margin as needed */
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #333;
+    position: relative;
+    padding-bottom: 10px;
+
+}
+
+.form-title::before {
+    content: '';
+    position: absolute;
+    width: 1208px;
+    height: 4px;
+    background-color: #007bff;
+    /* Choose your desired color */
+    bottom: 0;
+    left: 0;
+}
+
+.form-title {
+    font-size: 32px;
+    font-family: 'Arial', sans-serif;
+    /* Change the font-family here */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #333;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.btn-info.text-light:hover,
+.btn-info.text-light:focus {
+    background: #000;
+}
+
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+    border-color: powderblue !important;
+    border-style: solid;
+    border-width: 1px !important;
+}
+
+:root {
+    --bs-success-rgb: 71, 222, 152 !important;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    /* Hide scrollbars */
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 290px;
+}
+
+.flashited {
+    color: #f2f;
+    -webkit-animation: flash linear 1s infinite;
+    animation: flash linear 1s infinite;
+}
+
+@-webkit-keyframes flash {
+    0% {
+        opacity: 1;
     }
 
-    .form-title {
-        font-size: 32px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        text-align: left;
-        color: #333;
-        position: relative;
-        padding-bottom: 10px;
-
+    50% {
+        opacity: .1;
     }
 
-    .form-title::before {
-        content: '';
-        position: absolute;
-        width: 1208px;
-        height: 4px;
-        background-color: #007bff;
-        /* Choose your desired color */
-        bottom: 0;
-        left: 0;
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
     }
 
-    .form-title {
-        font-size: 32px;
-        font-family: 'Arial', sans-serif;
-        /* Change the font-family here */
-        font-weight: bold;
-        margin-bottom: 20px;
-        text-align: left;
-        color: #333;
-        position: relative;
-        padding-bottom: 10px;
+    50% {
+        opacity: .1;
     }
 
-    .btn-info.text-light:hover,
-    .btn-info.text-light:focus {
-        background: #000;
+    100% {
+        opacity: 1;
     }
+}
 
-    table,
-    tbody,
-    td,
-    tfoot,
-    th,
-    thead,
-    tr {
-        border-color: powderblue !important;
-        border-style: solid;
-        border-width: 1px !important;
-    }
+.short-btn {
+    width: 15px;
+    /* Adjust the width as needed */
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    overflow: hidden;
+    /* Hide overflowed content */
+    text-overflow: ellipsis;
+    /* Display an ellipsis (...) when text overflows */
+}
 
-    :root {
-        --bs-success-rgb: 71, 222, 152 !important;
-    }
-
-    html,
-    body {
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        /* Hide scrollbars */
-    }
-
-    .dashboard-container {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .sidebar {
-        width: 290px;
-    }
-
-    .flashited {
-        color: #f2f;
-        -webkit-animation: flash linear 1s infinite;
-        animation: flash linear 1s infinite;
-    }
-
-    @-webkit-keyframes flash {
-        0% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: .1;
-        }
-
-        100% {
-            opacity: 1;
-        }
-    }
-
-    @keyframes flash {
-        0% {
-            opacity: 1;
-        }
-
-        50% {
-            opacity: .1;
-        }
-
-        100% {
-            opacity: 1;
-        }
-    }
-
-    .short-btn {
-        width: 15px;
-        /* Adjust the width as needed */
-        white-space: nowrap;
-        /* Prevent text wrapping */
-        overflow: hidden;
-        /* Hide overflowed content */
-        text-overflow: ellipsis;
-        /* Display an ellipsis (...) when text overflows */
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-    }
+body {
+    font-family: Arial, sans-serif;
+}
 </style>
 
 <body>
@@ -202,32 +202,37 @@ $pdo = null;
                 <ul>
                     <hr style="border-top: 2px solid black;">
                     <li>
-                        <a href="client_dashboard.php" class="dashboard-link"> <img src="image/dashboard.png" alt="Dashboard Logo" class="dashboard-img">Home</a>
+                        <a href="client_dashboard.php" class="dashboard-link"> <img src="image/dashboard.png"
+                                alt="Dashboard Logo" class="dashboard-img">Home</a>
                     </li>
                     <li>
-                        <a href="services.php" class="dashboard-link"> <img src="image/services.png" alt="Services Logo" class="dashboard-img">Services</a>
+                        <a href="services.php" class="dashboard-link"> <img src="image/services.png" alt="Services Logo"
+                                class="dashboard-img">Services</a>
                     </li>
                     <li>
-                        <a href="request_docs.php" class="dashboard-link"> <img src="image/payments.png" alt="Docs Logo" class="dashboard-img">Documents</a>
+                        <a href="request_docs.php" class="dashboard-link"> <img src="image/payments.png" alt="Docs Logo"
+                                class="dashboard-img">Documents</a>
                     </li>
                     </li>
                     <li>
-                        <a href="transactions.php" class="dashboard-link"> <img src="image/transactions.png" alt="Docs Logo" class="dashboard-img">Transactions</a>
+                        <a href="transactions.php" class="dashboard-link"> <img src="image/transactions.png"
+                                alt="Docs Logo" class="dashboard-img">Transactions</a>
                     </li>
 
                     <li>
-                        <a href="client_chatbot.php" class="dashboard-link"><img src="image/chatbot.png" alt="chatbot Logo" class="dashboard-img">Chatbot</a>
+                        <a href="client_chatbot.php" class="dashboard-link"><img src="image/chatbot.png"
+                                alt="chatbot Logo" class="dashboard-img">Chatbot</a>
                     </li>
                 </ul>
                 <?php
                 if (isset($_SESSION['user'])) { ?>
-                    <button class="logout-button" onclick="window.location.href='logout.php'">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
+                <button class="logout-button" onclick="window.location.href='logout.php'">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
                 <?php } else { ?>
-                    <button class="logout-button" style="background-color:green" onclick="window.location.href='login.php'">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
+                <button class="logout-button" style="background-color:green" onclick="window.location.href='login.php'">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
                 <?php } ?>
                 </a>
             </div>
@@ -237,38 +242,55 @@ $pdo = null;
                         <span>For Payment(s)</span>
                         <div>
                             <?php if (@$_SESSION["user"]["accountType"] == 'Admin' and $total > '0') { ?>
-                                <span class="fa fa-bell noti" style="color:red"><sup style="color:red;" class="flashited"><?php echo $total; ?></sup></span>
+                            <span class="fa fa-bell noti" style="color:red"><sup style="color:red;"
+                                    class="flashited"><?php echo $total; ?></sup></span>
                             <?php } else {
                             }
                             if (!isset($_SESSION['user'])) { ?>
-                                <img src="picture_data/profile.png" alt="Profile Image">
+                            <img src="picture_data/profile.png" alt="Profile Image">
                             <?php    } else {
                             ?>
-                                <img src="picture_data/<?php echo $_SESSION["user"]["picture_data"]; ?>" alt="Profile Image" id="profile">
+                            <img src="picture_data/<?php echo $_SESSION["user"]["picture_data"]; ?>" alt="Profile Image"
+                                id="profile">
                             <?php } ?>
                         </div>
                     </div>
                 </div>
 
                 <div class="container py-5" id="page-container">
-
-                    <?php
-                    if (!isset($_SESSION['user'])) { ?>
-                        <h6 style="color:red"><b>Note:</b> You must log in to view and fill out this form.</h6>
-                    <?php } else {
-                    } ?>
-                    <?php
-                    if (isset($_SESSION['user'])) { ?>
-                        <div id="client_message">
-
-                        </div>
-
-
-
-
+                    <?php if (!isset($_SESSION['user'])) { ?>
+                    <h6 style="color:red"><b>Note:</b> You must log in to view and fill out this form.</h6>
+                    <?php } else { ?>
+                    <div id="client_message"></div>
+                    <h2>List of Schedules</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Event Type</th>
+                                <!-- <th>Document</th> -->
+                                <th>Amount Payment</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<tr>";
+                                    echo "<td>" . (isset($row['event_type']) ? $row['event_type'] : '') . "</td>";
+                                    // echo "<td>" . (isset($row['document_type']) ? $row['document_type'] : '') . "</td>";
+                                    echo "<td>" . ($row['amount'] !== null ? $row['amount'] : "No amount") . "</td>";
+                                    echo "<td><button class='btn btn-success' id='confirm_payment-" . $row['id'] . "'>Confirm
+                                        Payment</button></td>";
+                                    // Add more table cells for other columns if needed
+                                    echo "</tr>";
+                                }
+                                ?>
+                        </tbody>
+                    </table>
+                    <?php } ?>
                 </div>
-            <?php } else {
-                    } ?>
+
+
             </div>
             </form>
 
@@ -276,7 +298,8 @@ $pdo = null;
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header  bg-success">
@@ -292,23 +315,23 @@ $pdo = null;
     </div>
 </body>
 <script>
-    $(document).ready(function() {
-        $("#date_filter").datepicker({
-            format: 'yyyy-mm-dd',
-            startDate: '-3m',
-            autoclose: true
-        })
-
-
-        jQuery('#dateAndTime').datetimepicker({
-            format: 'Y-m-d g:i A', // Set the format to 'yyyy-mm-dd HH:ii' for date and time
-            step: 30, // Set the time step to 30 minutes (optional)
-            timepicker: true, // Enable the time picker
-            minDate: new Date()
-        });
-
-
+$(document).ready(function() {
+    $("#date_filter").datepicker({
+        format: 'yyyy-mm-dd',
+        startDate: '-3m',
+        autoclose: true
     })
+
+
+    jQuery('#dateAndTime').datetimepicker({
+        format: 'Y-m-d g:i A', // Set the format to 'yyyy-mm-dd HH:ii' for date and time
+        step: 30, // Set the time step to 30 minutes (optional)
+        timepicker: true, // Enable the time picker
+        minDate: new Date()
+    });
+
+
+})
 </script>
 
 <script src="./js/client_notify.js"></script>
