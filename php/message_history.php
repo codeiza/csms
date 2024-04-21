@@ -52,7 +52,7 @@ try {
             $messageHistory .= '<div class="incoming_msg_img">  </div>';
             $messageHistory .= '<div class="received_msg">';
             $messageHistory .= '<div class="received_withd_msg">';
-            $messageHistory .= '<p><strong>From: ' . $from . '</strong> <br>' . $message . '</p>';
+            $messageHistory .= '<p><strong>' . $message . '</p>';
             $messageHistory .= '<span class="time_date">' . date("h:i A | F j", strtotime($row["date"])) . '</span>';
             $messageHistory .= '</div>';
             $messageHistory .= '</div>';

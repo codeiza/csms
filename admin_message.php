@@ -396,6 +396,16 @@ img {
     text-align: left;
     color: #4caf50;
 }
+
+.notification-container {
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
+.notification-container>* {
+    margin-bottom: 10px;
+}
 </style>
 
 <body>
@@ -421,22 +431,9 @@ img {
 
                     <div class="profile">
                         <span>Message</span>
-                        <div class="col-sm-4">
-                            <div class="custom-dropdown">
-                                <select class="form-control" id="message_filter">
-                                    <option>All</option>
-                                    <option>Inbox</option>
-                                    <option>Sent Items</option>
-                                    <!--<option>Archived</option>-->
-                                </select>
-                            </div>
-                        </div>
-
 
                         <?php if (@$_SESSION["user"]["accountType"] == 'Client') { ?>
                         <input type="button" class="btn btn-outline-warning livechat" value="Live chat" />
-                        <?php } else { ?>
-                        <img class="write" src="images/new_msg.png" />
                         <?php } ?>
                         <div>
                             <?php if (@$_SESSION["user"]["accountType"] == 'Admin' and $total > '0') { ?>
@@ -469,6 +466,21 @@ img {
                 </div>
 
                 <div class="container">
+                    <div class="notification-container">
+                        <div class="custom-dropdown" style="width: 400px; margin-bottom: 12px;">
+                            <select class="form-control" id="message_filter">
+                                <option>All</option>
+                                <option>Inbox</option>
+                                <option>Sent Items</option>
+                                <!--<option>Archived</option>-->
+                            </select>
+                        </div>
+                        <button class="Live chat"
+                            style="border: none; background-color: transparent;  margin-left: 700px;">
+                            <img class="write" src="images/new_msg.png" alt="New message" width="40" height="40" />
+                        </button>
+                    </div>
+
                     <div class="messaging">
                         <div class="inbox_msg">
                             <div class="inbox_people">
@@ -730,7 +742,8 @@ img {
                         }, // Send selected filter option to the server
                         success: function(response) {
                             $('.inbox_chat').html(
-                            response); // Update the message display area with fetched messages
+                                response
+                                ); // Update the message display area with fetched messages
                         }
                     });
                 });
@@ -738,7 +751,7 @@ img {
                 $(document).on('click', '.chat_people', function() {
                     $('#auto').hide();
                     var other_party = $(this).find('.other')
-                .text(); // Get the username from the clicked chat_people element
+                        .text(); // Get the username from the clicked chat_people element
                     $.ajax({
                         url: 'php/message_history.php', // Endpoint to fetch message history
                         type: 'post',
@@ -747,7 +760,8 @@ img {
                         }, // Pass the username to fetch the message history
                         success: function(response) {
                             $('.msg_history').html(
-                            response); // Update the message history section with the fetched data
+                                response
+                                ); // Update the message history section with the fetched data
                             $('.type_msg').show();
                         },
                         error: function(xhr, status, error) {

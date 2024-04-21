@@ -717,19 +717,42 @@ img {
 
             function sendMessage(message, sender) {
                 var messageClass = (sender === 'user') ? 'user-message' : 'bot-message';
-                $('#chat-window').append('<div class="message ' + messageClass + '">' + message + '</div>');
+                var messageContent = (sender === 'user') ?
+                    '<div class="outgoing_msg"><div class="sent_msg"><p>' + message +
+                    '</p><span class="time_date">' + getCurrentTime() + '</span></div></div>' : message;
+                $('#chat-window').append('<div class="message ' + messageClass + '">' + messageContent +
+                    '</div>');
             }
 
+            function getCurrentTime() {
+                // Function to get current time formatted as desired
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // Handle midnight
+                minutes = minutes < 10 ? '0' + minutes : minutes; // Add leading zero for single digit minutes
+                var timeString = hours + ':' + minutes + ' ' + ampm + ' | ' + now.toLocaleString('en-US', {
+                    month: 'long',
+                    day: 'numeric'
+                });
+                return timeString;
+            }
+
+
+
             function respondToUser(userInput) {
-                // Hardcoded responses (you can replace these with your actual responses)
                 var response;
+                var responseWrapper;
                 switch (userInput) {
                     case 'How can I make a donation to Iglesia Filipina Independiente Parish?':
                         response =
                             "You can make a donation through our system by selecting the 'Donation' option and choosing the amount you wish to donate. We accept various payment methods for your convenience.";
                         break;
                     case 'What services can I request through the Church Service Management System?':
-                        response = "You can request the following services:<br>" +
+                        response =
+                            "You can request the following services:<br>" +
                             "- Baptism<br>" +
                             "- Wedding<br>" +
                             "- Funeral<br>" +
@@ -765,8 +788,20 @@ img {
                         response =
                             "Your message is more important to us, if you cannot find answer please click live chat.";
                 }
-                sendMessage(response, 'bot');
+
+                responseWrapper = '<div class="incoming_msg">' +
+                    '<div class="incoming_msg_img"></div>' +
+                    '<div class="received_msg">' +
+                    '<div class="received_withd_msg">' +
+                    '<p><strong>' + response + '</strong></p>' +
+                    '<span class="time_date">' + getCurrentTime() + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                sendMessage(responseWrapper, 'bot');
             }
+
             $('#message_filter').change(function() {
                 var filter = $(this).val(); // Get the selected filter option
                 $.ajax({
