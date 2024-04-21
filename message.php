@@ -4,35 +4,35 @@ require_once 'php/connection.php';
 require_once 'php/option_user.php';
 
 try {
-  $pdo = new PDO(DSN, DB_USR, DB_PWD);
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = new PDO(DSN, DB_USR, DB_PWD);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  // Count total messages
-  $stmt = $pdo->prepare("SELECT COUNT(*) AS totalmsg FROM message WHERE from_message = :userName");
-  $stmt->execute([':userName' => $_SESSION["user"]["userName"]]);
-  $totalmsg = $stmt->fetch(PDO::FETCH_ASSOC)['totalmsg'];
+    // Count total messages
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS totalmsg FROM message WHERE from_message = :userName");
+    $stmt->execute([':userName' => $_SESSION["user"]["userName"]]);
+    $totalmsg = $stmt->fetch(PDO::FETCH_ASSOC)['totalmsg'];
 
 
-  // Count total scheduled items
-  $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM schedule_list WHERE Status = 'For Schedule' AND cancel_delete IS NULL");
-  $stmt->execute();
-  $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    // Count total scheduled items
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM schedule_list WHERE Status = 'For Schedule' AND cancel_delete IS NULL");
+    $stmt->execute();
+    $total = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
-  // Count total documents
-  $stmt = $pdo->prepare("SELECT COUNT(*) AS totaldoc FROM requested_document WHERE request_status = 'For Received'");
-  $stmt->execute();
-  $totaldoc = $stmt->fetch(PDO::FETCH_ASSOC)['totaldoc'];
+    // Count total documents
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS totaldoc FROM requested_document WHERE request_status = 'For Received'");
+    $stmt->execute();
+    $totaldoc = $stmt->fetch(PDO::FETCH_ASSOC)['totaldoc'];
 } catch (PDOException $e) {
-  echo $e->getMessage();
+    echo $e->getMessage();
 }
 
 $pdo = null;
 
 if (isset($_SESSION["user"]["firstName"])) {
-  // Your session logic here
+    // Your session logic here
 } else {
-  header('Location: index.php');
-  exit(); // Ensure no further code execution after redirection
+    header('Location: index.php');
+    exit(); // Ensure no further code execution after redirection
 }
 ?>
 
@@ -419,17 +419,17 @@ img {
             </div>
             <div style="text-align: center;">
                 <?php
-        if (isset($_SESSION["user"]["firstName"])) {
-          echo '<h2 style="font-family: Helvetica, sans-serif;">Welcome ' . $_SESSION["user"]["firstName"] . '!</h2>';
-          if ($_SESSION["user"]["accountType"] == 'Priest') {
-            echo '<p style="color: yellow; font-size: 12px; font-family: Helvetica, sans-serif;">You are logged in as a Secretary  </p>';
-          } else {
-            echo '<p style="color: yellow; font-size: 12px; font-family: Helvetica, sans-serif;">You are logged in as a ' . $_SESSION["user"]["accountType"] . '  </p>';
-          }
-        } else {
-          echo '<h2>Welcome Guest!</h2>'; // or any other default message you want
-        }
-        ?>
+                if (isset($_SESSION["user"]["firstName"])) {
+                    echo '<h2 style="font-family: Helvetica, sans-serif;">Welcome ' . $_SESSION["user"]["firstName"] . '!</h2>';
+                    if ($_SESSION["user"]["accountType"] == 'Priest') {
+                        echo '<p style="color: yellow; font-size: 12px; font-family: Helvetica, sans-serif;">You are logged in as a Secretary  </p>';
+                    } else {
+                        echo '<p style="color: yellow; font-size: 12px; font-family: Helvetica, sans-serif;">You are logged in as a ' . $_SESSION["user"]["accountType"] . '  </p>';
+                    }
+                } else {
+                    echo '<h2>Welcome Guest!</h2>'; // or any other default message you want
+                }
+                ?>
             </div>
             <ul>
                 <hr style="border-top: 2px solid black;">
@@ -444,7 +444,7 @@ img {
                 </li>
             </ul>
             <?php
-      if (isset($_SESSION['user'])) { ?>
+            if (isset($_SESSION['user'])) { ?>
             <button class="logout-button" onclick="window.location.href='logout.php'">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -469,11 +469,11 @@ img {
                         <span class="fa fa-bell noti" style="color:red"><sup style="color:red;"
                                 class="flashited"><?php echo $total; ?></sup></span>
                         <?php } else {
-            }
-            if (!isset($_SESSION['user'])) { ?>
+                        }
+                        if (!isset($_SESSION['user'])) { ?>
                         <img src="image/profile.png" alt="Profile Image">
                         <?php  } else {
-            ?>
+                        ?>
                         <img src="image/<?php echo $_SESSION["user"]["picture_data"]; ?>" alt="Profile Image"
                             id="profile">
                         <?php } ?>
@@ -504,7 +504,9 @@ img {
                             <!--<option>Archived</option>-->
                         </select>
                     </div>
-                    <img class="test" src="images/new_msg.png" />
+                    <button class="Live chat" style="border: none; background-color: transparent;">
+                        <img class="write" src="images/new_msg.png" alt="New message" />
+                    </button>
                 </div>
 
                 <div class="messaging">
@@ -526,59 +528,69 @@ img {
             </div>-->
                             </div>
                             <?php
-              try {
-                $pdo = new PDO(DSN, DB_USR, DB_PWD);
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $stmt = $pdo->prepare(
-                  "SELECT MAX(id) as latest_message_id, 
-								CASE 
-									WHEN from_message = :username THEN to_message 
-									ELSE from_message 
-								END AS other_party, 
-								MAX(date_update) as latest_timestamp,
-								COUNT(*) as total_messages,to_message,from_message
-						FROM message
-						WHERE to_message = :username OR from_message = :username
-						GROUP BY 
-								CASE 
-									WHEN from_message = :username THEN to_message 
-									ELSE from_message 
-								END
-						ORDER BY latest_timestamp DESC"
-                );
+                            try {
+                                $pdo = new PDO(DSN, DB_USR, DB_PWD);
+                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $pdo->prepare(
+                                    "SELECT MAX(id) as latest_message_id, 
+                                            CASE 
+                                                WHEN from_message = :username THEN to_message 
+                                                ELSE from_message 
+                                            END AS other_party, 
+                                            MAX(date_update) as latest_timestamp,
+                                            COUNT(*) as total_messages, to_message, from_message
+                                    FROM message
+                                    WHERE to_message = :username OR from_message = :username
+                                    GROUP BY 
+                                            CASE 
+                                                WHEN from_message = :username THEN to_message 
+                                                ELSE from_message 
+                                            END
+                                    ORDER BY latest_timestamp DESC"
+                                );
 
-                $stmt->execute([':username' => $_SESSION["user"]["userName"]]);
-                $currentUser = $_SESSION["user"]["userName"];
-                echo '<div class="inbox_chat">';
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  $from = $row["from_message"];
-                  $date_update = $row["latest_timestamp"]; // Use latest_timestamp instead of date_update
-                  $formatted_date = date("M d", strtotime($date_update));
-                  $other_party = $row["other_party"]; // Use the other_party field
-                  if ($from == $currentUser) {
-                    $from = $row["to_message"]; // Use the other_party field
-                  } else {
-                    $from = $row["from_message"];
-                  }
-                  echo '<div class="chat_list active_chat">';
-                  echo '<div class="chat_people">';
-                  echo '<div class="chat_img">From: ' . $from . '</div>';
-                  echo '<div class="chat_ib">';
-                  echo '<h5><span class="other">' . $other_party . '</span><span class="chat_date">' . $formatted_date . '</span></h5>';
-                  // Now you need to fetch the latest message for this conversation and display it
-                  $latest_message_id = $row["latest_message_id"];
-                  $latest_message_stmt = $pdo->prepare("SELECT * FROM message WHERE id = :id");
-                  $latest_message_stmt->execute([':id' => $latest_message_id]);
-                  $latest_message_row = $latest_message_stmt->fetch(PDO::FETCH_ASSOC);
-                  echo '<p>' . $latest_message_row["message"] . '</p>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</div>';
-                }
-                echo '</div>';
+                                $stmt->execute([':username' => $_SESSION["user"]["userName"]]);
+                                $currentUser = $_SESSION["user"]["userName"];
+                                echo '<div class="inbox_chat">';
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $from = $row["from_message"];
+                                    $date_update = $row["latest_timestamp"];
+                                    $formatted_date = date("M d", strtotime($date_update));
+                                    $other_party = $row["other_party"];
+
+                                    // Fetch isOnline status for other_party
+                                    $isOnlineStmt = $pdo->prepare("SELECT isOnline FROM users WHERE username = ?");
+                                    $isOnlineStmt->execute([$other_party]);
+                                    $isOnline = $isOnlineStmt->fetchColumn();
+
+                                    // Determine online status indicator
+                                    $onlineIndicator = ($isOnline == 1) ? '<span style="color: green;">(Online)</span>' : '';
+
+                                    if ($from == $currentUser) {
+                                        $from = $row["to_message"];
+                                    } else {
+                                        $from = $row["from_message"];
+                                    }
+                                    echo '<div class="chat_list active_chat">';
+                                    echo '<div class="chat_people">';
+                                    echo '<div class="chat_img">From: ' . $from . $onlineIndicator . '</div>';
+                                    echo '<div class="chat_ib">';
+                                    echo '<h5><span class="other">' . $other_party . '</span><span class="chat_date">' . $formatted_date . '</span></h5>';
+                                    // Now you need to fetch the latest message for this conversation and display it
+                                    $latest_message_id = $row["latest_message_id"];
+                                    $latest_message_stmt = $pdo->prepare("SELECT * FROM message WHERE id = :id");
+                                    $latest_message_stmt->execute([':id' => $latest_message_id]);
+                                    $latest_message_row = $latest_message_stmt->fetch(PDO::FETCH_ASSOC);
+                                    echo '<p>' . $latest_message_row["message"] . '</p>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                }
+                                echo '</div>';
 
 
-              ?>
+
+                            ?>
                         </div>
 
                         <div class="mesgs">
@@ -633,11 +645,11 @@ img {
 
                             <?php } ?>
                             <?php
-              } catch (PDOException $e) {
-                echo $e->getMessage();
-              }
-              $pdo = null;
-            ?>
+                            } catch (PDOException $e) {
+                                echo $e->getMessage();
+                            }
+                            $pdo = null;
+                        ?>
                             <div class="type_msg" style="display:none">
                                 <div class="input_msg_write">
                                     <input type="text" class="write_msg" placeholder="Type a messages" />
@@ -673,7 +685,7 @@ img {
 
 
 
-    ?>
+        ?>
         <script>
         $(document).ready(function() {
             $('#user-input').keypress(function(event) {
@@ -761,7 +773,7 @@ img {
                     success: function(response) {
                         $('.inbox_chat').html(
                             response
-                        ); // Update the message display area with fetched messages
+                            ); // Update the message display area with fetched messages
                     }
                 });
             });
@@ -779,7 +791,7 @@ img {
                     success: function(response) {
                         $('.msg_history').html(
                             response
-                        ); // Update the message history section with the fetched data
+                            ); // Update the message history section with the fetched data
                         $('.type_msg').show();
                     },
                     error: function(xhr, status, error) {

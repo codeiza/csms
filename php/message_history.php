@@ -14,31 +14,46 @@ try {
     $stmt->execute([':currentUser' => $currentUser, ':to' => $otherParty]);
 
     $messageHistory = '';
+
+    // Wrap the name and "Active Now" in a div with flexbox styling
+    $messageHistory .= '<div style="display: flex; flex-direction: column; border-bottom: 2px solid #333; text-align: left;">';
+    // Display the name of the other user
+    $messageHistory .= '<h3 style="color: black; width: 100%;">' . $otherParty . '</h3>';
+
+    // Check if the other user is online
+    $isOnlineStmt = $pdo->prepare("SELECT isOnline FROM users WHERE username = ?");
+    $isOnlineStmt->execute([$otherParty]);
+    $isOnline = $isOnlineStmt->fetchColumn();
+
+    // If the user is online, display "Active Now" with blue color
+    if ($isOnline == 1) {
+        $messageHistory .= '<p style="text-align: left; color: green; font-size: small;">Active Now</p>';
+    }
+
+    $messageHistory .= '</div>'; // Close the wrapping div
+
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $message = $row["message"];
         $from = $row["from_message"];
         $to = $row["to_message"];
-		
 
         // Check if the message is incoming or outgoing
         if ($from == $currentUser) {
-			echo'<span id="form" style="display:none">'.$row["to_message"].'</span>';
             // Outgoing message
             $messageHistory .= '<div class="outgoing_msg">';
             $messageHistory .= '<div class="sent_msg">';
-            $messageHistory .= '<p>'.$message.'</p>';
-            $messageHistory .= '<span class="time_date">'.date("h:i A | F j", strtotime($row["date"])).'</span>';
+            $messageHistory .= '<p>' . $message . '</p>';
+            $messageHistory .= '<span class="time_date">' . date("h:i A | F j", strtotime($row["date"])) . '</span>';
             $messageHistory .= '</div>';
             $messageHistory .= '</div>';
         } else {
-			echo'<span id="form" style="display:none">'.$row["from_message"].'</span>';
             // Incoming message
             $messageHistory .= '<div class="incoming_msg">';
             $messageHistory .= '<div class="incoming_msg_img">  </div>';
             $messageHistory .= '<div class="received_msg">';
             $messageHistory .= '<div class="received_withd_msg">';
-            $messageHistory .= '<p><strong>From: '.$from.'</strong> <br>'.$message.'</p>';
-            $messageHistory .= '<span class="time_date">'.date("h:i A | F j", strtotime($row["date"])).'</span>';
+            $messageHistory .= '<p><strong>From: ' . $from . '</strong> <br>' . $message . '</p>';
+            $messageHistory .= '<span class="time_date">' . date("h:i A | F j", strtotime($row["date"])) . '</span>';
             $messageHistory .= '</div>';
             $messageHistory .= '</div>';
             $messageHistory .= '</div>';
@@ -49,5 +64,3 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage(); // Send any errors back to the AJAX request
 }
-?>
-

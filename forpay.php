@@ -17,14 +17,14 @@ try {
     );
     $stmt->execute();
     $total = $stmt->rowCount();
-    // $stmt = $pdo->prepare(
-    //     "SELECT * FROM requested_document
-    //    WHERE
-    //    request_status = 'For Received'
-    //    "
-    // );
-    // $stmt->execute();
-    // $totaldoc = $stmt->rowCount();
+    $stmt = $pdo->prepare(
+        "SELECT * FROM requested_document
+	   WHERE
+	   request_status = 'For Received'
+	   "
+    );
+    $stmt->execute();
+    $totaldoc = $stmt->rowCount();
 } catch (PDOExeption $e) {
     echo $e->getMessage();
 }
@@ -51,15 +51,6 @@ $pdo = null;
 
 </head>
 <style>
-.form-box {
-    border: 2px solid #ccc;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: 20px;
-    /* Adjust the margin as needed */
-}
-
 .form-title {
     font-size: 32px;
     font-weight: bold;
@@ -99,72 +90,7 @@ $pdo = null;
     background: #000;
 }
 
-table,
-tbody,
-td,
-tfoot,
-th,
-thead,
-tr {
-    border-color: powderblue !important;
-    border-style: solid;
-    border-width: 1px !important;
-}
 
-:root {
-    --bs-success-rgb: 71, 222, 152 !important;
-}
-
-html,
-body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    /* Hide scrollbars */
-}
-
-.dashboard-container {
-    display: flex;
-    flex-direction: row;
-}
-
-.sidebar {
-    width: 290px;
-}
-
-.flashited {
-    color: #f2f;
-    -webkit-animation: flash linear 1s infinite;
-    animation: flash linear 1s infinite;
-}
-
-@-webkit-keyframes flash {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: .1;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes flash {
-    0% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: .1;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
 
 .short-btn {
     width: 15px;
@@ -192,7 +118,7 @@ body {
                 <div style="text-align: center;">
                     <?php
                     if (isset($_SESSION["user"]["firstName"])) {
-                        echo '<h2 style="font-family: Helvetica, sans-serif;">Welcome ' . $_SESSION["user"]["firstName"] . '!</h2>';
+                        echo '<h6 style="font-family: Helvetica, sans-serif;">Welcome ' . $_SESSION["user"]["firstName"] . '!</h6>';
                         echo '<p style="color: yellow; font-size: 12px; font-family: Helvetica, sans-serif;">You are logged in as a ' . $_SESSION["user"]["accountType"] . '</p>';
                     } else {
                         echo '<h2>Welcome Guest!</h2>'; // or any other default message you want
@@ -258,39 +184,24 @@ body {
                 </div>
 
                 <div class="container py-5" id="page-container">
-                    <?php if (!isset($_SESSION['user'])) { ?>
+
+                    <?php
+                    if (!isset($_SESSION['user'])) { ?>
                     <h6 style="color:red"><b>Note:</b> You must log in to view and fill out this form.</h6>
-                    <?php } else { ?>
-                    <div id="client_message"></div>
-                    <h2>List of Schedules</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Event Type</th>
-                                <!-- <th>Document</th> -->
-                                <th>Amount Payment</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    echo "<tr>";
-                                    echo "<td>" . (isset($row['event_type']) ? $row['event_type'] : '') . "</td>";
-                                    // echo "<td>" . (isset($row['document_type']) ? $row['document_type'] : '') . "</td>";
-                                    echo "<td>" . ($row['amount'] !== null ? $row['amount'] : "No amount") . "</td>";
-                                    echo "<td><button class='btn btn-success' id='confirm_payment-" . $row['id'] . "'>Confirm
-                                        Payment</button></td>";
-                                    // Add more table cells for other columns if needed
-                                    echo "</tr>";
-                                }
-                                ?>
-                        </tbody>
-                    </table>
-                    <?php } ?>
+                    <?php } else {
+                    } ?>
+                    <?php
+                    if (isset($_SESSION['user'])) { ?>
+                    <div id="client_message">
+
+                    </div>
+
+
+
+
                 </div>
-
-
+                <?php } else {
+                    } ?>
             </div>
             </form>
 
